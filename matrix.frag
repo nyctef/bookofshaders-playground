@@ -32,13 +32,14 @@ float rchar(in vec2 ipos,in vec2 fpos){
 
 // st ranges from 0.0-1.0
 vec3 matrix(in vec2 st){
-    float rows=90.;
+    float rows=50.;
     
     // ipos: which character we're displaying
     vec2 ipos=floor(st*rows);
-    ipos+=vec2(.0,floor(u_time*20.*random(ipos.x+1.)));
+    ipos+=vec2(.0,floor((u_time+200.)*20.*random(ipos.x+1.)));
     // pick a random brightness
-    float pct=random(ipos)*.7+.2;
+    // mix square and sawtooth waves
+    float bright=-(abs((sin(ipos.y/10.+2.))))*(ipos.y/10.-floor(ipos.y/10.))*.7+.2;
     
     // fpos: the position within the character
     vec2 fpos=fract(st*rows);
@@ -46,7 +47,7 @@ vec3 matrix(in vec2 st){
     float glow=(1.-dot(center,center)*3.)*2.;
     // glow = 1.0;
     
-    return vec3(rchar(ipos,fpos)*pct*glow);
+    return vec3(rchar(ipos,fpos)*bright*glow);
 }
 
 void main(){
