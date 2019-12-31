@@ -36,10 +36,11 @@ vec3 matrix(in vec2 st){
     
     // ipos: which character we're displaying
     vec2 ipos=floor(st*rows);
-    ipos+=vec2(.0,floor((u_time+200.)*20.*random(ipos.x+1.)));
+    
     // pick a random brightness
+    vec2 ipos2=ipos+vec2(.0,floor((u_time+200.)*10.*random(ipos.x+1.)));
     // mix square and sawtooth waves
-    float bright=-(abs((sin(ipos.y/10.+2.))))*(ipos.y/10.-floor(ipos.y/10.))*.7+.2;
+    float bright=-(abs((sin(ipos2.y/10.+2.))))*(ipos2.y/10.-floor(ipos2.y/10.))*.7+.2;
     
     // fpos: the position within the character
     vec2 fpos=fract(st*rows);
